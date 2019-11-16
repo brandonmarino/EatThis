@@ -1,2 +1,2 @@
-cd eatthisadmin
+cd eatthis
 python manage.py runserver 0.0.0.0:8000
