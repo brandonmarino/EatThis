@@ -1,4 +1,3 @@
-// include('/static/eatthis/slotmachine.min');
 
 let pescatarian = false;
 let lacto = false;
@@ -102,21 +101,9 @@ function loadInputsWithParameters() {
     }
 }
 
-function setupSlotMachine() {
-    const el = document.querySelector('#machine');
-    const machine = new SlotMachine(el, {
-        active: 1,
-        delay: 450,
-        auto: 1500
-    });
-
-    machine.shuffle();
-}
-
 setTimeout(() => {
     loadInputsWithParameters();
 }, 500);
-setupSlotMachine();
 
 if (currentGeoLocation == null || (currentGeoLocation.latitude === 0 && currentGeoLocation.longitude === 0)) {
     // get the location
