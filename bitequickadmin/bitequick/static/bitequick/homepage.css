@@ -1,0 +1,28 @@
+.section-wrapper {
+    width: 100%;
+    text-align: center;
+}
+
+#machine {
+    width: 100%;
+    text-align: center;
+}
+
+.location-field {
+    width: 150px;
+}
+
+.range-field {
+    width: 100px;
+    text-align: right;
+}
+
+.dietary-select {
+    width: 450px;
+}
+
+.input-field {
+    margin-left: 10px;
+    margin-right: 10px;
+    display: inline-block !important;
+}

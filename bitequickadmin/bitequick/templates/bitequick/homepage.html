@@ -1,0 +1,66 @@
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"  media="screen,projection"/>
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'bitequick/homepage.css' %}">
+
+{% load static %}
+<script type="text/javascript" src="{% static 'bitequick/homepage.js' %}"></script>
+
+{% load static %}
+<script type="text/javascript" src="{% static 'bitequick/slotmachine.min.js' %}"></script>
+
+<form action="#" method="get">
+    <section class="section-wrapper">
+        <section class="input-field location-field col s6">
+            <input id="geo_location" type="text" class="validate" name="geo_location" value="''" >
+            <label for="geo_location">Location</label>
+        </section>
+
+        <section class="input-field range-field col s6">
+            <input onclick="onSelectClick()" id="range" type="number" class="validate" name="range" value="8" >
+            <label for="range">Distance (km)</label>
+        </section>
+
+    </section>
+    <section class="section-wrapper">
+        {% if dietary_restrictions %}
+            <section class="input-field dietary-select col s12">
+                <select 
+                    name="dietary_restrictions"
+                    multiple>
+                    {% for restriction in dietary_restrictions %}
+                        <option 
+                        {% if restriction.selected %}selected="true"{% endif %}
+                        value="{{restriction.value}}">{{restriction.name}}</option>
+                    {% endfor %}
+                </select>
+                <label>Dietary Restrictions</label>
+            </section>
+        {% endif %}
+    </section>
+    <section class="section-wrapper">
+        <input 
+            type="submit" 
+            class="btn" 
+            value="Pick a place to eat!"
+            name="getplaces">
+    </section>
+</form>
+
+{% if selected_restaurant %}
+    <div id="machine">
+            <label>{{selected_restaurant.name}}</label>
+            <br />
+            <label>Distance: {{selected_restaurant.location.distance}}</label>
+            <br />
+            <label>Location: {{selected_restaurant.location.address}}, {{selected_restaurant.location.city}}</label>
+            <br />
+            <br />
+            <br />
+        
+    </div>
+{% endif %}
