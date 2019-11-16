@@ -1,3 +1,4 @@
 bitequickadmin/db.sqlite3
 **/*.pyc
 **/*.DS_Store
+bitequickadmin/bitequick/static/bitequick/slotmachine.min.js
