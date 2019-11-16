@@ -34,7 +34,7 @@
                     {% for restriction in dietary_restrictions %}
                         <option 
                         {% if restriction.selected %}selected="true"{% endif %}
-                        value="{{restriction.value}}">{{restriction.name}}</option>
+                        value='{{restriction.value}}'>{{restriction.name}}</option>
                     {% endfor %}
                 </select>
                 <label>Dietary Restrictions</label>

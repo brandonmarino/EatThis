@@ -1,0 +1,20 @@
+{
+    "dietary_restrictions": [
+        {
+            "name": "Pescatarian",
+            "value": "pescatarian"
+        },
+        {
+            "name": "Vegetarian (Lacto-ovo)",
+            "value": "lacto-ovo-vegetarian"
+        },
+        {
+            "name": "Vegan",
+            "value": "vegan"
+        },
+        {
+            "name": "gluten free",
+            "value": "gluten-free"
+        }
+    ]
+}

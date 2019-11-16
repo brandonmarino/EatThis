@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.conf import settings
+from copy import deepcopy
 
 import requests
 import random
@@ -21,30 +22,13 @@ def load_home_page(request):
     return HttpResponse(template.render(context, request))
 
 def get_dietary_restrictions(request):
-    dietary_restrictions = str(request.GET.getlist('dietary_restrictions'))
+    selected_dietary_restrictions = str(request.GET.getlist('dietary_restrictions'))
     # return our list of dietary restrictions and if they will be selected due to the current path
-    return [
-        {
-            'name': 'Pescatarian',
-            'value': 'pescatarian',
-            'selected': ('pescatarian' in dietary_restrictions)
-        },
-        {
-            'name': 'Vegetarian (Lacto-ovo)',
-            'value': 'lacto-ovo-vegetarian',
-            'selected': ('lacto-ovo-vegetarian' in dietary_restrictions)
-        },
-        {
-            'name': 'Vegan',
-            'value': 'vegan',
-            'selected': ('vegan' in dietary_restrictions)
-        },
-        {
-            'name': 'gluten free',
-            'value': 'gluten-free',
-            'selected': ('gluten-free' in dietary_restrictions)
-        }
-    ]
+    all_dietary_restrictions = deepcopy(settings.DIETARY_RESTRICTIONS)
+    for restriction in all_dietary_restrictions:
+        restriction['selected'] = (restriction['value'] in selected_dietary_restrictions)
+    return all_dietary_restrictions
+    
 #
 # Query Forquare for local restaurants meeting the given criteria.
 # Return this list to be consumed as context for the page

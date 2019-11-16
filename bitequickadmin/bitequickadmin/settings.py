@@ -20,9 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 with open('../../api_keys.json') as api_keys_file:
     api_keys = json.load(api_keys_file)
 
+with open('./constants.json') as constants_file:
+    constants = json.load(constants_file)
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = api_keys['python_key']
 FOURSQUARE_KEYS = api_keys['foursquare']
+DIETARY_RESTRICTIONS = constants['dietary_restrictions']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
