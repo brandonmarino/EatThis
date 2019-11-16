@@ -26,7 +26,7 @@ def load_home_page(request):
 
     # load the dietry restriction context with data from the current route
     context['dietary_restrictions'] = get_dietary_restrictions(request)
-    template = loader.get_template('bitequick/homepage.html')
+    template = loader.get_template('eatthis/homepage.html')
     return HttpResponse(template.render(context, request))
 #
 # Load all dietary restrictions and set which ones were selected by the user

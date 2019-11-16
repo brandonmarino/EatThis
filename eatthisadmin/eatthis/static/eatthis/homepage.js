@@ -1,4 +1,4 @@
-// include('/static/bitequick/slotmachine.min');
+// include('/static/eatthis/slotmachine.min');
 
 let pescatarian = false;
 let lacto = false;

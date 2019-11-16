@@ -1,4 +1,4 @@
-bitequickadmin/db.sqlite3
+eatthisadmin/db.sqlite3
 **/*.pyc
 **/*.DS_Store
-bitequickadmin/bitequick/static/bitequick/slotmachine.min.js
+eatthisadmin/eatthis/static/eatthis/slotmachine.min.js
