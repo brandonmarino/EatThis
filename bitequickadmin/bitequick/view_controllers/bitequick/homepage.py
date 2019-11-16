@@ -8,19 +8,29 @@ import requests
 import random
 import json
 
+#
+# Load the context for the page and return the http response for the page
+#
 def load_home_page(request):
-    context = {}
-    if(request.GET.get('getplaces')):
+    context = {
+        "restaurants": [],
+        "selected_restaurant": {}
+    }
+    if request.GET.get('getplaces'):
         # get local places with the provided url params
-        context = get_local_places(request)
-        if (len(context['restaurants']) > 0):
+        local_places = get_local_places(request)
+        if local_places is not None:
+            context = local_places
+        if len(context['restaurants']) > 0:
             context['selected_restaurant'] = random.choice(context['restaurants'])
 
     # load the dietry restriction context with data from the current route
     context['dietary_restrictions'] = get_dietary_restrictions(request)
     template = loader.get_template('bitequick/homepage.html')
     return HttpResponse(template.render(context, request))
-
+#
+# Load all dietary restrictions and set which ones were selected by the user
+#
 def get_dietary_restrictions(request):
     selected_dietary_restrictions = str(request.GET.getlist('dietary_restrictions'))
     # return our list of dietary restrictions and if they will be selected due to the current path
@@ -28,7 +38,16 @@ def get_dietary_restrictions(request):
     for restriction in all_dietary_restrictions:
         restriction['selected'] = (restriction['value'] in selected_dietary_restrictions)
     return all_dietary_restrictions
-    
+
+# Get any additional terms we would like to add to the restaurant filter 
+# These will assist fourquare and give the user more options for places to eat
+def get_additional_terms_for_search(selected_dietary_restrictions):
+    all_dietary_restrictions = deepcopy(settings.DIETARY_RESTRICTIONS)
+    query_additional_terms = ''
+    for restriction in all_dietary_restrictions:
+        if hasattr(restriction, 'additional-terms') and restriction['value'] in selected_dietary_restrictions:
+            query_additional_terms += restriction['additional-terms']
+    return query_additional_terms
 #
 # Query Forquare for local restaurants meeting the given criteria.
 # Return this list to be consumed as context for the page
@@ -51,24 +70,20 @@ def get_local_places(request):
     # get the dietary restrictions of this user from the url
     dietary_restrictions = str(request.GET.getlist('dietary_restrictions'))
     # prepare dietary restrictions for the url by stripping off unneccessary characters
-    dietary_restrictions = dietary_restrictions.strip('[]').replace("u'", "")
+    dietary_restrictions = dietary_restrictions.strip('[]').replace("u'", "").replace("'", "")
 
     # adding keywords based on restrictions which make the query more robust
-    dietary_metadata = ''
+    dietary_metadata = get_additional_terms_for_search(dietary_restrictions)
 
-    if ('pescatarian' in dietary_restrictions):
-        dietary_metadata += ' fish '
-
-    if ('gluten' in dietary_restrictions):
-        dietary_metadata += ' celiac '
+    dietary_restrictions += ' ' + dietary_metadata + ' '
 
     # build the url to query fourspuare for near by restaurants
     url = 'https://api.foursquare.com/v2/venues/explore?client_id=' + client_id + '&client_secret=' + client_secret + '&ll=' + geo_location + '&query=restaurant ' + dietary_restrictions + '&v=' + api_version + '&radius=' + radius + '&openNow=1'
-    r = requests.get(url)
-
+    response = requests.get(url)
+    
     # get the recommendations from the response
-    if (r.json()['response'] and r.json()['response']['groups']):
-        restaurant_items = r.json()['response']['groups'][0]['items']
+    if response.json()['response'] and response.json()['response']['groups']:
+        restaurant_items = response.json()['response']['groups'][0]['items']
 
         # strip of a bunch of unneccessary information that we will not be using in this app
         restaurant_venues = []

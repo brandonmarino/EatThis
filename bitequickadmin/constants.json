@@ -2,11 +2,12 @@
     "dietary_restrictions": [
         {
             "name": "Pescatarian",
-            "value": "pescatarian"
+            "value": "pescatarian",
+            "additional-terms": "fish"
         },
         {
             "name": "Vegetarian (Lacto-ovo)",
-            "value": "lacto-ovo-vegetarian"
+            "value": "lactoovovegetarian"
         },
         {
             "name": "Vegan",
@@ -14,7 +15,8 @@
         },
         {
             "name": "gluten free",
-            "value": "gluten-free"
+            "value": "gluten",
+            "additional-terms": "celiac"
         }
     ]
 }
