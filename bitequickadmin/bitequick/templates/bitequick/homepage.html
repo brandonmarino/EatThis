@@ -21,10 +21,9 @@
         </section>
 
         <section class="input-field range-field col s6">
-            <input onclick="onSelectClick()" id="range" type="number" class="validate" name="range" value="8" >
+            <input id="range" type="number" class="validate" name="range" value="8" >
             <label for="range">Distance (km)</label>
         </section>
-
     </section>
     <section class="section-wrapper">
         {% if dietary_restrictions %}
@@ -42,13 +41,23 @@
             </section>
         {% endif %}
     </section>
+    
     <section class="section-wrapper">
+        {% if selected_restaurant %}
+        <input 
+            type="submit" 
+            class="btn" 
+            value="Try Again?"
+            name="getplaces">
+        {% else %}
         <input 
             type="submit" 
             class="btn" 
             value="Pick a place to eat!"
             name="getplaces">
+        {% endif %}
     </section>
+    <input style="visibility: hidden;" id="attempts" type="number" class="validate" name="attempts" value="0" >
 </form>
 
 {% if selected_restaurant %}

@@ -37,36 +37,43 @@ function getLocation() {
 function loadInputsWithParameters() {
     // get the current url
     const url = new URL(window.location.href);
-    
+
     // pull geolocation from current url
-    setTimeout(() => {
-        const geoLocationElement = document.getElementById('geo_location');
-        const geoLocationString = url.searchParams.get("geo_location");
+    const geoLocationElement = document.getElementById('geo_location');
+    const geoLocationString = url.searchParams.get("geo_location");
 
-        if (geoLocationString != null && geoLocationString.length > 0 && geoLocationElement != null) {
-            const geoLocation = JSON.parse(geoLocationString);
-            // store geolocation
-            currentGeoLocation.latitude = geoLocation != null ? geoLocation[0] : currentGeoLocation.latitude;
-            currentGeoLocation.longitude = geoLocation != null ? geoLocation[1] : currentGeoLocation.longitude;
-            geoLocationElement.value = geoLocationString;
-            geoLocationElement.style.textAlign = "right";
-        }
-    });
+    if (geoLocationString != null && geoLocationString.length > 0 && geoLocationElement != null) {
+        const geoLocation = JSON.parse(geoLocationString);
+        // store geolocation
+        currentGeoLocation.latitude = geoLocation != null ? geoLocation[0] : currentGeoLocation.latitude;
+        currentGeoLocation.longitude = geoLocation != null ? geoLocation[1] : currentGeoLocation.longitude;
+        geoLocationElement.value = geoLocationString;
+        geoLocationElement.style.textAlign = "right";
+    }
+
+    const attemptsElement = document.getElementById('attempts');
+    const attemptsString = url.searchParams.get("attempts");
+
+    if (attemptsString != null && attemptsString.length > 0 && attemptsElement != null) {
+        const attempts = +attemptsString + 1;
+        attemptsElement.value = ''+attempts;
+    } else {
+        attemptsElement.value = ''+1;
+    }
+
     // get range from current url
-    setTimeout(() => {
-        const rangeElement = document.getElementById('range');
-        const rangeString = url.searchParams.get("range");
-        if (rangeString != null && rangeElement != null) {
-            const range = JSON.parse(rangeString);
-            rangeElement.value = range;
-            rangeElement.style.textAlign = "right";
-        }
+    const rangeElement = document.getElementById('range');
+    const rangeString = url.searchParams.get("range");
+    if (rangeString != null && rangeElement != null) {
+        const range = JSON.parse(rangeString);
+        rangeElement.value = range;
+        rangeElement.style.textAlign = "right";
+    }
 
-        const dietaryElement = document.getElementById('dietary_restrictions');
-        if (dietaryElement != null) {
-            dietaryElement.style.textAlign = "right";
-        }
-    });
+    const dietaryElement = document.getElementById('dietary_restrictions');
+    if (dietaryElement != null) {
+        dietaryElement.style.textAlign = "right";
+    }
 
     // get the current dietary restrictions from the url
     const dietaryRestrictionStringArray = url.searchParams.getAll("dietary_restrictions");
@@ -106,7 +113,9 @@ function setupSlotMachine() {
     machine.shuffle();
 }
 
-loadInputsWithParameters();
+setTimeout(() => {
+    loadInputsWithParameters();
+}, 500);
 setupSlotMachine();
 
 if (currentGeoLocation == null || (currentGeoLocation.latitude === 0 && currentGeoLocation.longitude === 0)) {

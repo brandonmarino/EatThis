@@ -12,9 +12,11 @@ def load_home_page(request):
     if(request.GET.get('getplaces')):
         # get local places with the provided url params
         context = get_local_places(request)
-        # context['selected_restaurant'] = random.choice(context['restaurants'])
+        if (len(context['restaurants']) > 0):
+            context['selected_restaurant'] = random.choice(context['restaurants'])
+
     # load the dietry restriction context with data from the current route
-    # context['dietary_restrictions'] = get_dietary_restrictions(request)
+    context['dietary_restrictions'] = get_dietary_restrictions(request)
     template = loader.get_template('bitequick/homepage.html')
     return HttpResponse(template.render(context, request))
 
@@ -87,7 +89,6 @@ def get_local_places(request):
         # strip of a bunch of unneccessary information that we will not be using in this app
         restaurant_venues = []
         for current_restaurant in restaurant_items:
-            print(current_restaurant['venue'])
             restaurant_venues.append(current_restaurant['venue'])
         
         return { 'restaurants': restaurant_venues }
