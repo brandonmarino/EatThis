@@ -31,7 +31,7 @@ DIETARY_RESTRICTIONS = constants['dietary_restrictions']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = api_keys['debug']
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
