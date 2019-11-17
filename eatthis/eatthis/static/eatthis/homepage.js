@@ -29,7 +29,13 @@ function showPosition(position) {
 
 function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        };
+
+        navigator.geolocation.getCurrentPosition(showPosition, () => {}, options);
     }
 }
 
