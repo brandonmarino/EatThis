@@ -3,13 +3,13 @@
     text-align: center;
 }
 
-#machine {
+.eatthis-response {
     width: 100%;
     text-align: center;
 }
 
 .location-field {
-    width: 150px;
+    width: 200px;
 }
 
 .range-field {
@@ -18,11 +18,94 @@
 }
 
 .dietary-select {
-    width: 450px;
+    width: 100%;
 }
 
 .input-field {
     margin-left: 10px;
     margin-right: 10px;
     display: inline-block !important;
+}
+
+.form-container {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+}
+
+.form {
+    display: inline-block;
+    max-width: 80%;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.header {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,0.14);
+    background-color: transparent;
+    padding-bottom: 20px;
+}
+
+.mapouter {
+    position: relative;
+    text-align: right;
+    height: 200px;
+    width: 100%;
+}
+
+.gmap_canvas {
+    overflow: hidden;
+    background: none !important;
+    height: 200px;
+    width: 100%;
+}
+
+.restaurant-name {
+    padding-right: 20px;
+}
+
+.btn {
+    width: 100%;
+    background-color: #1976D2;
+}
+
+.btn:hover {
+    width: 100%;
+    background-color: #2083e4;
+}
+
+.btn:focus {
+    width: 100%;
+    background-color: #1669bb;
+}
+
+.input-field input[type=text]:focus + label {
+    color: #000;
+}
+
+.input-field input[type=text]:focus, input#geo_location:focus, input#range:focus, input#geo_location.validate.valid, input#range.validate.valid {
+    border-bottom: 1px solid #1976D2;
+    -webkit-box-shadow: 0 1px 0 0 #1976D2;
+    box-shadow: 0 1px 0 0 #1976D2;
+}
+
+[type="checkbox"]:checked+span:not(.lever):before {
+    border-right: 2px solid #1976D2;
+    border-bottom: 2px solid #1976D2;
+}
+
+.dropdown-content li>a, .dropdown-content li>span {
+    color: #1976D2;
+}
+
+.geolocation-icon {
+    position: absolute;
+    right: 0px;
+    top: 10px;
+}
+
+.geolocation-icon:hover {
+    background: #d3d3d3;
 }

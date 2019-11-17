@@ -10,63 +10,76 @@
 {% load static %}
 <script type="text/javascript" src="{% static 'eatthis/homepage.js' %}"></script>
 
-<form action="#" method="get">
-    <section class="section-wrapper">
-        <section class="input-field location-field col s6">
-            <input id="geo_location" type="text" class="validate" name="geo_location" value="''" >
-            <label for="geo_location">Location</label>
-        </section>
+<h2 class="header blue-text text-darken-2">EAT THIS!</h2>
 
-        <section class="input-field range-field col s6">
-            <input id="range" type="number" class="validate" name="range" value="8" >
-            <label for="range">Distance (km)</label>
-        </section>
-    </section>
-    <section class="section-wrapper">
-        {% if dietary_restrictions %}
-            <section class="input-field dietary-select col s12">
-                <select 
-                    name="dietary_restrictions"
-                    multiple>
-                    {% for restriction in dietary_restrictions %}
-                        <option 
-                        {% if restriction.selected %}selected="true"{% endif %}
-                        value='{{restriction.value}}'>{{restriction.name}}</option>
-                    {% endfor %}
-                </select>
-                <label>Dietary Restrictions</label>
+<div class="form-container">
+    <form class="form" action="#" method="get">
+        <section class="section-wrapper">
+            <section class="input-field location-field col s6">
+                <input disabled id="geo_location" type="text" class="validate" name="geo_location" value="[0,0]" >
+                <label for="geo_location">Location</label>
+                <i class="material-icons geolocation-icon">map</i>
             </section>
-        {% endif %}
-    </section>
-    
-    <section class="section-wrapper">
-        {% if selected_restaurant %}
-        <input 
-            type="submit" 
-            class="btn" 
-            value="Try Again?"
-            name="getplaces">
-        {% else %}
-        <input 
-            type="submit" 
-            class="btn" 
-            value="Pick a place to eat!"
-            name="getplaces">
-        {% endif %}
-    </section>
-    <input style="visibility: hidden;" id="attempts" type="number" class="validate" name="attempts" value="0" >
-</form>
 
-{% if selected_restaurant %}
-    <div id="machine">
-            <label>{{selected_restaurant.name}}</label>
-            <br />
-            <label>Distance: {{selected_restaurant.location.distance}}</label>
-            <br />
-            <label>Location: {{selected_restaurant.location.address}}, {{selected_restaurant.location.city}}</label>
-            <br />
-            <br />
-            <br />
+            <section class="input-field range-field col s6">
+                <select 
+                    id="range"
+                    name="range">
+                    <option value=2>Walking</option>
+                    <option value=15>Driving</option>
+                </select>
+                <label>Distance</label>
+            </section>
+        </section>
+        <section class="section-wrapper">
+            {% if dietary_restrictions %}
+                <section class="input-field dietary-select col s12">
+                    <select 
+                        name="dietary_restrictions"
+                        multiple>
+                        {% for restriction in dietary_restrictions %}
+                            <option 
+                            {% if restriction.selected %}selected="true"{% endif %}
+                            value='{{restriction.value}}'>{{restriction.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label>Dietary Restrictions</label>
+                </section>
+            {% endif %}
+        </section>
         
-    </div>
-{% endif %}
+        {% if selected_restaurant %}
+            <h5>Have you tried this?</h5>
+            <div class="eatthis-response">
+                <br />
+                <label class="restaurant-name">{{selected_restaurant.name}}</label>
+                <label>{{selected_restaurant.location.address}}, {{selected_restaurant.location.city}}</label>
+
+                <div class="mapouter">
+                    <div class="gmap_canvas">
+                        <iframe width="100%" height="200" id="gmap_canvas" src="https://maps.google.com/maps?q={{selected_restaurant.name}}%20{{selected_restaurant.location.address}}%20{{selected_restaurant.location.city}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <input style="visibility: hidden;" id="attempts" type="number" class="validate" name="attempts" value="0" >
+
+        <section class="section-wrapper">
+                
+                <button 
+                    type="submit" 
+                    class="btn" 
+                    value="eat"
+                    name="getplaces">
+                    {% if selected_restaurant %}
+                    Try Again?
+                    {% else %}
+                    Pick a place to eat!
+                    {% endif %}
+                    <i class="material-icons right">fastfood</i>
+                </button>
+            </section>
+    </form>
+</div>

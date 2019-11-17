@@ -66,7 +66,10 @@ def get_local_places(request):
     radius = str(int(range)*100)
 
     # strip off the array brackets
-    geo_location = geo_location.strip('[]')
+    if geo_location is not None:
+        geo_location = geo_location.strip('[]')
+    else:
+        geo_location = ''
     # get the dietary restrictions of this user from the url
     dietary_restrictions = str(request.GET.getlist('dietary_restrictions'))
     # prepare dietary restrictions for the url by stripping off unneccessary characters
@@ -80,7 +83,7 @@ def get_local_places(request):
     # build the url to query fourspuare for near by restaurants
     url = 'https://api.foursquare.com/v2/venues/explore?client_id=' + client_id + '&client_secret=' + client_secret + '&ll=' + geo_location + '&query=restaurant ' + dietary_restrictions + '&v=' + api_version + '&radius=' + radius + '&openNow=1'
     response = requests.get(url)
-    
+
     # get the recommendations from the response
     if response.json()['response'] and response.json()['response']['groups']:
         restaurant_items = response.json()['response']['groups'][0]['items']
