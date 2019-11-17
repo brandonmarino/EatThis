@@ -15,8 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', include('eatthis.urls')),
 ]
+
+
+# nasty, but this is only going on my one server
+# not planning on setting up a bunch of workers for this
+urlpatterns += staticfiles_urlpatterns()
