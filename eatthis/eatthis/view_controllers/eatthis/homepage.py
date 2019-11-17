@@ -26,6 +26,7 @@ def load_home_page(request):
 
     # load the dietry restriction context with data from the current route
     context['dietary_restrictions'] = get_dietary_restrictions(request)
+    context['range'] = request.GET.get('range')
     template = loader.get_template('eatthis/homepage.html')
     return HttpResponse(template.render(context, request))
 #

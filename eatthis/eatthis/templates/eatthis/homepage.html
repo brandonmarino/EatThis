@@ -27,8 +27,9 @@
                 <select 
                     id="range"
                     name="range">
-                    <option value=2>Walking</option>
-                    <option value=15>Driving</option>
+                    <option value=2 {% if range == "2" %}selected{% endif %}>Walk (2 km)</option>
+                    <option value=15 {% if range == "15" %}selected{% endif %}>Drive (15 km)</option>
+                    <option value=25 {% if range == "25" %}selected{% endif %}>Far Drive (25 km)</option>
                 </select>
                 <label>Distance</label>
             </section>
@@ -67,7 +68,7 @@
         {% endif %}
 
         <input style="visibility: hidden;" id="attempts" type="number" class="validate" name="attempts" value="0" >
-        <input style="display: none;" id="geo_location_2" type="text" class="visibility: hidden;" name="geo_location" value="[0,0]" >
+        <input style="display: none;" id="geo_location_2" type="text" name="geo_location" value="[0,0]" >
 
         <section class="section-wrapper">
                 <button 

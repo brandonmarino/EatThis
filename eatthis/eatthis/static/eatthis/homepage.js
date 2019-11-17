@@ -63,20 +63,6 @@ function loadInputsWithParameters() {
     } else {
         attemptsElement.value = ''+1;
     }
-
-    // get range from current url
-    const rangeElement = document.getElementById('range');
-    const rangeString = url.searchParams.get("range");
-    if (rangeString != null && rangeElement != null) {
-        const range = JSON.parse(rangeString);
-        rangeElement.value = range;
-        rangeElement.style.textAlign = "right";
-    }
-
-    const dietaryElement = document.getElementById('dietary_restrictions');
-    if (dietaryElement != null) {
-        dietaryElement.style.textAlign = "right";
-    }
 }
 
 /**
@@ -89,9 +75,13 @@ function setupSelectElement() {
     });    
 }
 
+
 // set up the select
 setupSelectElement();
-// get the location and enable the submit button after
-setupLocationSearch();
-// load inputs with url params
-loadInputsWithParameters();
+
+setTimeout(() => {
+    // get the location and enable the submit button after
+    setupLocationSearch();
+    // load inputs with url params
+    loadInputsWithParameters();
+}, 100)
