@@ -16,7 +16,7 @@
     <form class="form" action="#" method="get">
         <section class="section-wrapper">
             <section class="input-field location-field col s6">
-                <input disabled id="geo_location" type="text" class="validate" name="geo_location" value="[0,0]" >
+                <input disabled id="geo_location" type="text" class="validate" value="[0,0]" >
                 <label for="geo_location">Location</label>
             </section>
 
@@ -64,6 +64,7 @@
         {% endif %}
 
         <input style="visibility: hidden;" id="attempts" type="number" class="validate" name="attempts" value="0" >
+        <input style="display: none;" id="geo_location_2" type="text" class="visibility: hidden;" name="geo_location" value="[0,0]" >
 
         <section class="section-wrapper">
                 <button 

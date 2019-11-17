@@ -4,6 +4,7 @@
  */
 function showPosition(position) {
     const geoLocation = document.getElementById('geo_location');
+    const geoLocation2 = document.getElementById('geo_location_2');
 
     // round so that the gps point is not so ugly. We can assume an 11 meter bias, thats fine for this app
     const currentGeoLocation = {
@@ -13,6 +14,7 @@ function showPosition(position) {
 
     // get the location value
     geoLocation.value = `[${currentGeoLocation.latitude}, ${currentGeoLocation.longitude}]`;
+    geoLocation2.value = `[${currentGeoLocation.latitude}, ${currentGeoLocation.longitude}]`;;
     geoLocation.focus();
 }
 
