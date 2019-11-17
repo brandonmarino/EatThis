@@ -18,7 +18,6 @@
             <section class="input-field location-field col s6">
                 <input disabled id="geo_location" type="text" class="validate" name="geo_location" value="[0,0]" >
                 <label for="geo_location">Location</label>
-                <i class="material-icons geolocation-icon">map</i>
             </section>
 
             <section class="input-field range-field col s6">
@@ -67,8 +66,9 @@
         <input style="visibility: hidden;" id="attempts" type="number" class="validate" name="attempts" value="0" >
 
         <section class="section-wrapper">
-                
                 <button 
+                    disabled
+                    id="submit-button"
                     type="submit" 
                     class="btn" 
                     value="eat"

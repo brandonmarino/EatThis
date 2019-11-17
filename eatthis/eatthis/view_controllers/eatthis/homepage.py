@@ -63,7 +63,10 @@ def get_local_places(request):
     # get the range from the form
     range = request.GET.get('range')
     # the radius from the user that the app will accept. These should change to a dropdown for the user
-    radius = str(int(range)*100)
+    if range is not None:
+        radius = str(int(range)*100)
+    else:
+        radius = '2'
 
     # strip off the array brackets
     if geo_location is not None:
