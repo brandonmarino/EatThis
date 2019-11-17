@@ -109,3 +109,7 @@
 .geolocation-icon:hover {
     background: #d3d3d3;
 }
+
+.geolocation-select {
+    display: none;
+}

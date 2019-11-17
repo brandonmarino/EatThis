@@ -3,6 +3,7 @@ let pescatarian = false;
 let lacto = false;
 let vegan = false;
 let gluten = false;
+let showingMap = false;
 
 let currentGeoLocation = {
     latitude: 0,
@@ -11,8 +12,18 @@ let currentGeoLocation = {
 
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('select');
-    var instances = M.FormSelect.init(elems, {});
+    M.FormSelect.init(elems, {});
 });
+
+function showMap() {
+    showingMap = !showingMap;
+    const geoLocationSelect = document.getElementById('geolocation-select');
+    const geoLocationMap = document.getElementById('geolocation-select-map');
+    
+    geoLocationMap.src = geoLocationMap.src.replace('geo_location', `[${currentGeoLocation.latitude}, ${currentGeoLocation.longitude}]`);
+    
+    geoLocationSelect.style.display = showingMap ? 'inherit' : 'none';
+}
 
 function showPosition(position) {
     const geoLocation = document.getElementById('geo_location');
@@ -31,8 +42,8 @@ function getLocation() {
     if (navigator.geolocation) {
         var options = {
             enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
+            //timeout: 5000,
+            //maximumAge: 0
         };
 
         navigator.geolocation.getCurrentPosition(showPosition, () => {}, options);
