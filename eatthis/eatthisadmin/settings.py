@@ -29,7 +29,7 @@ FOURSQUARE_KEYS = api_keys['foursquare']
 DIETARY_RESTRICTIONS = constants['dietary_restrictions']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = api_keys['debug']
 
 ALLOWED_HOSTS = []
 
