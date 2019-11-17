@@ -1,19 +1,7 @@
-
-let pescatarian = false;
-let lacto = false;
-let vegan = false;
-let gluten = false;
-
-let currentGeoLocation = {
-    latitude: 0,
-    longitude: 0
-};
-
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('select');
-    var instances = M.FormSelect.init(elems, {});
-});
-
+/**
+ * Display the current location to the geo location element
+ * @param {*} position the position from getCurrentPosition
+ */
 function showPosition(position) {
     const geoLocation = document.getElementById('geo_location');
 
@@ -23,11 +11,24 @@ function showPosition(position) {
         longitude: Math.round(position.coords.longitude * 10000) / 10000
     };
 
+    // get the location value
     geoLocation.value = `[${currentGeoLocation.latitude}, ${currentGeoLocation.longitude}]`;
     geoLocation.focus();
 }
 
-function getLocation() {
+/**
+ * Enable the submit button for the form
+ */
+function enableSubmitButton() {
+    // enable the eat button
+    const submitButtonElement = document.getElementById('submit-button');
+    submitButtonElement.disabled = false;
+}
+
+/**
+ * Setup the location search and handlers for when the location is found
+ */
+function setupLocationSearch() {
     if (navigator.geolocation) {
         var options = {
             enableHighAccuracy: true,
@@ -35,27 +36,22 @@ function getLocation() {
             maximumAge: 0
         };
 
-        navigator.geolocation.getCurrentPosition(showPosition, () => {}, options);
+        // get the location, display it and enable the submit button
+        navigator.geolocation.getCurrentPosition((coords) => {
+            showPosition(coords);
+            enableSubmitButton();
+        }, (error) => {
+            console.error(error);
+        }, options);
     }
 }
 
+/**
+ * Take inputs from the url and preload the inputs with those values
+ */
 function loadInputsWithParameters() {
     // get the current url
     const url = new URL(window.location.href);
-
-    // pull geolocation from current url
-    const geoLocationElement = document.getElementById('geo_location');
-    const geoLocationString = url.searchParams.get("geo_location");
-
-    if (geoLocationString != null && geoLocationString.length > 0 && geoLocationElement != null) {
-        const geoLocation = JSON.parse(geoLocationString);
-        // store geolocation
-        currentGeoLocation.latitude = geoLocation != null ? geoLocation[0] : currentGeoLocation.latitude;
-        currentGeoLocation.longitude = geoLocation != null ? geoLocation[1] : currentGeoLocation.longitude;
-        geoLocationElement.value = geoLocationString;
-        geoLocationElement.style.textAlign = "right";
-    }
-
     const attemptsElement = document.getElementById('attempts');
     const attemptsString = url.searchParams.get("attempts");
 
@@ -79,41 +75,21 @@ function loadInputsWithParameters() {
     if (dietaryElement != null) {
         dietaryElement.style.textAlign = "right";
     }
-
-    // get the current dietary restrictions from the url
-    const dietaryRestrictionStringArray = url.searchParams.getAll("dietary_restrictions");
-    // loop through each restriction and select it in the mat select
-    if (Array.isArray(dietaryRestrictionStringArray)) {
-        dietaryRestrictionStringArray.forEach((currentDietaryRestriction) => {
-            const dietaryTag = currentDietaryRestriction.split('-')[0].split(' ')[0];
-            
-            switch(dietaryTag) {
-                case "pescatarian":
-                    pescatarian = true;
-                    break;
-                case "lacto":
-                    lacto = true;
-                    break;
-                case "vegan":
-                    vegan = true;
-                    break;
-                case "gluten":
-                    gluten = true;
-                    break;
-                default:
-                    break;
-            }
-        });
-    }
 }
 
-setTimeout(() => {
-    loadInputsWithParameters();
-}, 500);
-
-if (currentGeoLocation == null || (currentGeoLocation.latitude === 0 && currentGeoLocation.longitude === 0)) {
-    // get the location
-    setTimeout(() => {
-        getLocation();
-    },100);
+/**
+ * Initialize the select component
+ */
+function setupSelectElement() {
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        M.FormSelect.init(elems, {});
+    });    
 }
+
+// set up the select
+setupSelectElement();
+// get the location and enable the submit button after
+setupLocationSearch();
+// load inputs with url params
+loadInputsWithParameters();
